@@ -1,0 +1,19 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Dgsqf <86830376+dgsqf@users.noreply.github.com>
+Date: Thu, 9 May 2024 15:27:13 +0200
+Subject: [PATCH] First try at a reach logic check.
+
+
+diff --git a/src/main/java/net/minecraft/world/entity/player/Player.java b/src/main/java/net/minecraft/world/entity/player/Player.java
+index 093d1388ff90ad59110a37536b6639f939549068..0b5950cbf11a76385d63bcc1ec8c109573b9edeb 100644
+--- a/src/main/java/net/minecraft/world/entity/player/Player.java
++++ b/src/main/java/net/minecraft/world/entity/player/Player.java
+@@ -1256,7 +1256,7 @@ public abstract class Player extends LivingEntity {
+ 
+     public void attack(Entity target) {
+         // Paper start - PlayerAttackEntityEvent
+-        boolean willAttack = target.isAttackable() && !target.skipAttackInteraction(this); // Vanilla logic
++        boolean willAttack = target.isAttackable() && !target.skipAttackInteraction(this) && target.position().distanceTo(this.position())<3.0; // Vanilla logic
+         io.papermc.paper.event.player.PrePlayerAttackEntityEvent playerAttackEntityEvent = new io.papermc.paper.event.player.PrePlayerAttackEntityEvent(
+             (org.bukkit.entity.Player) this.getBukkitEntity(),
+             target.getBukkitEntity(),
